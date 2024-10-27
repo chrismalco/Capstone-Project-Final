@@ -17,8 +17,6 @@ if load_dotenv('.env'):
 else:
    OPENAI_KEY = st.secrets['OPENAI_API_KEY']
 
-# Pass the API Key to the OpenAI Client
-client = OpenAI(api_key=OPENAI_KEY)
 # Some other code here are omitted for brevity
 
 # Streamlit UI Setup
