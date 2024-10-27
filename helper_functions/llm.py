@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 from openai import OpenAI
 import tiktoken
 
-
 load_dotenv('.env')
 
 # Pass the API Key to the OpenAI Client

@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from openai import OpenAI
 import re 
-import requests
 
 # Load environment variables (OpenAI API key)
 load_dotenv('.env')
@@ -32,43 +31,42 @@ st.subheader(
 
 # Step 1: Scrape General Data
 def scrape_general_data():
-    url = [
-        "https://www.enterprisesg.gov.sg/grow-your-business/boost-capabilities/growth-and-transformation,
-        https://www.enterprisesg.gov.sg/grow-your-business/boost-capabilities/productivity-and-digitalisation,
-        https://www.enterprisesg.gov.sg/grow-your-business/boost-capabilities/talent-attraction-and-development,
-        https://www.enterprisesg.gov.sg/grow-your-business/boost-capabilities/quality-and-standards,
-        https://www.enterprisesg.gov.sg/grow-your-business/boost-capabilities/sustainability,
-        https://www.enterprisesg.gov.sg/financial-support/productivity-solutions-grant,
-        https://www.enterprisesg.gov.sg/financial-support/energy-efficiency-grant,
-        https://www.enterprisesg.gov.sg/financial-support/market-readiness-assistance-grant,
-        https://www.enterprisesg.gov.sg/financial-support/skillsfuture-enterprise-credit,
-        https://www.enterprisesg.gov.sg/financial-support/double-tax-deduction-for-internationalisation,
-        https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme,
-        https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme-foreign-based-financial-institutions-multilateral-development-banks,
-        https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---green,
-        https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---mergers-and-acquisitions,
-        https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---project-loan,
-        https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---sme-fixed-assets,
-        https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---sme-working-capital,
-        https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---trade-loan,
-        https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---venture-debt,
-        https://www.enterprisesg.gov.sg/financial-support/enterprise-development-grant,
-        https://www.enterprisesg.gov.sg/financial-support/co-innovation-programmes,
-        https://www.enterprisesg.gov.sg/financial-support/edbi,
-        https://www.enterprisesg.gov.sg/financial-support/fund-management-incentive,
-        https://www.enterprisesg.gov.sg/financial-support/global-trader-programme,
-        https://www.enterprisesg.gov.sg/financial-support/lead-trade-fairs,
-        https://www.enterprisesg.gov.sg/financial-support/local-enterprise-and-association-development-programme,
-        https://www.enterprisesg.gov.sg/financial-support/seeds-capital,
-        https://www.enterprisesg.gov.sg/financial-support/startup-sg-accelerator,
-        https://www.enterprisesg.gov.sg/financial-support/startup-sg-equity,
-        https://www.enterprisesg.gov.sg/financial-support/startup-sg-founder,
-        https://www.enterprisesg.gov.sg/financial-support/startup-sg-tech,
-        https://www.enterprisesg.gov.sg/financial-support/sustainability-reporting-grant,
-        https://www.enterprisesg.gov.sg/financial-support/venture-capital-fund-incentive,
-        https://www.enterprisesg.gov.sg/financial-support/sustainability-reporting-grant/learn-more-about-our-programmes,
-        https://www.enterprisesg.gov.sg/financial-support/sustainability-reporting-grant/expand-into-southeast-asia
-        "
+    urls = [
+        "https://www.enterprisesg.gov.sg/grow-your-business/boost-capabilities/growth-and-transformation",
+        "https://www.enterprisesg.gov.sg/grow-your-business/boost-capabilities/productivity-and-digitalisation",
+        "https://www.enterprisesg.gov.sg/grow-your-business/boost-capabilities/talent-attraction-and-development",
+        "https://www.enterprisesg.gov.sg/grow-your-business/boost-capabilities/quality-and-standards",
+        "https://www.enterprisesg.gov.sg/grow-your-business/boost-capabilities/sustainability",
+        "https://www.enterprisesg.gov.sg/financial-support/productivity-solutions-grant",
+        "https://www.enterprisesg.gov.sg/financial-support/energy-efficiency-grant",
+        "https://www.enterprisesg.gov.sg/financial-support/market-readiness-assistance-grant",
+        "https://www.enterprisesg.gov.sg/financial-support/skillsfuture-enterprise-credit",
+        "https://www.enterprisesg.gov.sg/financial-support/double-tax-deduction-for-internationalisation",
+        "https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme",
+        "https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme-foreign-based-financial-institutions-multilateral-development-banks",
+        "https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---green",
+        "https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---mergers-and-acquisitions",
+        "https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---project-loan",
+        "https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---sme-fixed-assets",
+        "https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---sme-working-capital",
+        "https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---trade-loan",
+        "https://www.enterprisesg.gov.sg/financial-support/enterprise-financing-scheme---venture-debt",
+        "https://www.enterprisesg.gov.sg/financial-support/enterprise-development-grant",
+        "https://www.enterprisesg.gov.sg/financial-support/co-innovation-programmes",
+        "https://www.enterprisesg.gov.sg/financial-support/edbi",
+        "https://www.enterprisesg.gov.sg/financial-support/fund-management-incentive",
+        "https://www.enterprisesg.gov.sg/financial-support/global-trader-programme",
+        "https://www.enterprisesg.gov.sg/financial-support/lead-trade-fairs",
+        "https://www.enterprisesg.gov.sg/financial-support/local-enterprise-and-association-development-programme",
+        "https://www.enterprisesg.gov.sg/financial-support/seeds-capital",
+        "https://www.enterprisesg.gov.sg/financial-support/startup-sg-accelerator",
+        "https://www.enterprisesg.gov.sg/financial-support/startup-sg-equity",
+        "https://www.enterprisesg.gov.sg/financial-support/startup-sg-founder",
+        "https://www.enterprisesg.gov.sg/financial-support/startup-sg-tech",
+        "https://www.enterprisesg.gov.sg/financial-support/sustainability-reporting-grant",
+        "https://www.enterprisesg.gov.sg/financial-support/venture-capital-fund-incentive",
+        "https://www.enterprisesg.gov.sg/financial-support/sustainability-reporting-grant/learn-more-about-our-programmes",
+        "https://www.enterprisesg.gov.sg/financial-support/sustainability-reporting-grant/expand-into-southeast-asia"
     ]
     scraped_info = []
 
