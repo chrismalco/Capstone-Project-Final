@@ -10,12 +10,13 @@ import random
 from helper_functions.utility import check_password 
 
 # Load environment variables (OpenAI API key)
+# Load environment variables
+if os.path.exists('.env'):
+    load_dotenv('.env')  # For local development
 
-if load_dotenv('.env'):
-   # for local development
-   OPENAI_KEY = os.getenv('OPENAI_API_KEY')
 else:
    OPENAI_KEY = st.secrets['OPENAI_API_KEY']
+   OPENAI_MODEL_NAME = st.secrets['gpt-4o-mini']
 
 # Some other code here are omitted for brevity
 
