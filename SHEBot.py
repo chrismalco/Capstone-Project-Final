@@ -1,12 +1,13 @@
 import os
 import requests
 import openai
-import streamlit as st
 from dotenv import load_dotenv
 import json
 import pdfplumber
 import io
 import random
+import streamlit as st
+
 from helper_functions.utility import check_password 
 
 # Load environment variables (OpenAI API key)
@@ -22,8 +23,6 @@ else:
 
 # Streamlit UI Setup
 st.set_page_config(page_title="LTA SHEBot", layout="wide")
-
-
 
 st.markdown(
     """

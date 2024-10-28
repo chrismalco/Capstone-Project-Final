@@ -6,7 +6,7 @@ sources = [
         "name": "GENERAL SPECIFICATION APPENDIX A SAFETY, HEALTH AND ENVIRONMENT (April 2024 Edition)",
         "url": "https://file.go.gov.sg/gsappa042024.pdf",
         "description": (
-            "The General Specification Appendix A - Safety, Health, and Environment (April 2024 Edition) likely serves as a regulatory document detailing "
+            "The Land Transport Authority (LTA) General Specification Appendix A - Safety, Health, and Environment (April 2024 Edition) likely serves as a regulatory document detailing "
             "standards, protocols, and requirements for ensuring safe, healthy, and environmentally responsible practices within a particular project, "
             "industry, or organization. This appendix typically outlines guidelines to:\n\n"
             "- **Promote workplace safety** by minimizing hazards and managing risks.\n"
